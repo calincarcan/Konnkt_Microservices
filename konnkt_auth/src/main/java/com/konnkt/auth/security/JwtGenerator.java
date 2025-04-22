@@ -1,4 +1,4 @@
-package com.konnkt.backend.security;
+package com.konnkt.auth.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

@@ -1,9 +1,9 @@
-package com.konnkt.backend.config;
+package com.konnkt.auth.config;
 
-import com.konnkt.backend.entity.Role;
-import com.konnkt.backend.entity.User;
-import com.konnkt.backend.repository.RoleRepository;
-import com.konnkt.backend.repository.UserRepository;
+import com.konnkt.auth.entity.Role;
+import com.konnkt.auth.entity.User;
+import com.konnkt.auth.repository.RoleRepository;
+import com.konnkt.auth.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;

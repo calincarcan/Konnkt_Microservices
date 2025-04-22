@@ -1,6 +1,6 @@
-package com.konnkt.backend.repository;
+package com.konnkt.auth.repository;
 
-import com.konnkt.backend.entity.Role;
+import com.konnkt.auth.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

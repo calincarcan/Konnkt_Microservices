@@ -1,4 +1,4 @@
-package com.konnkt.backend.entity;
+package com.konnkt.auth.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;

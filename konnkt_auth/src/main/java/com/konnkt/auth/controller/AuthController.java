@@ -1,8 +1,8 @@
-package com.konnkt.backend.controller;
+package com.konnkt.auth.controller;
 
-import com.konnkt.backend.service.AuthService;
-import com.konnkt.backend.dto.LoginDto;
-import com.konnkt.backend.dto.RegisterDto;
+import com.konnkt.auth.service.AuthService;
+import com.konnkt.auth.dto.LoginDto;
+import com.konnkt.auth.dto.RegisterDto;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

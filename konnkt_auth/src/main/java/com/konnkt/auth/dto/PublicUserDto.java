@@ -1,4 +1,4 @@
-package com.konnkt.backend.dto;
+package com.konnkt.auth.dto;
 
 import lombok.Getter;
 

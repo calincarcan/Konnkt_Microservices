@@ -1,4 +1,4 @@
-package com.konnkt.backend.exception;
+package com.konnkt.auth.exception;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -1,13 +1,13 @@
-package com.konnkt.backend.service;
+package com.konnkt.auth.service;
 
-import com.konnkt.backend.dto.LoginDto;
-import com.konnkt.backend.dto.RegisterDto;
-import com.konnkt.backend.security.JwtGenerator;
-import com.konnkt.backend.entity.Role;
-import com.konnkt.backend.entity.User;
-import com.konnkt.backend.exception.BadRequestException;
-import com.konnkt.backend.repository.RoleRepository;
-import com.konnkt.backend.repository.UserRepository;
+import com.konnkt.auth.dto.LoginDto;
+import com.konnkt.auth.dto.RegisterDto;
+import com.konnkt.auth.security.JwtGenerator;
+import com.konnkt.auth.entity.Role;
+import com.konnkt.auth.entity.User;
+import com.konnkt.auth.exception.BadRequestException;
+import com.konnkt.auth.repository.RoleRepository;
+import com.konnkt.auth.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

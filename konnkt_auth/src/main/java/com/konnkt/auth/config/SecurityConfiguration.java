@@ -1,4 +1,4 @@
-package com.konnkt.backend.config;
+package com.konnkt.auth.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -15,8 +15,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.konnkt.backend.security.JwtAuthEntryPoint;
-import com.konnkt.backend.security.JwtAuthenticationFilter;
+import com.konnkt.auth.security.JwtAuthEntryPoint;
+import com.konnkt.auth.security.JwtAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity

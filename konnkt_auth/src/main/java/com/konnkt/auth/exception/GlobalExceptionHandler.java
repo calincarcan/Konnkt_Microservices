@@ -1,4 +1,4 @@
-package com.konnkt.backend.exception;
+package com.konnkt.auth.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

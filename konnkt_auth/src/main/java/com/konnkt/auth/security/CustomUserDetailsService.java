@@ -1,8 +1,8 @@
-package com.konnkt.backend.security;
+package com.konnkt.auth.security;
 
-import com.konnkt.backend.entity.Role;
-import com.konnkt.backend.entity.User;
-import com.konnkt.backend.repository.UserRepository;
+import com.konnkt.auth.entity.Role;
+import com.konnkt.auth.entity.User;
+import com.konnkt.auth.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

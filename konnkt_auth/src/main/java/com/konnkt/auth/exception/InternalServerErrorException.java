@@ -1,4 +1,4 @@
-package com.konnkt.backend.exception;
+package com.konnkt.auth.exception;
 
 public class InternalServerErrorException extends RuntimeException {
 
