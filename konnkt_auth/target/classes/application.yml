@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: Konnkt-Auth
+  datasource:
+    url: jdbc:postgresql://localhost:16666/postgres
+    username: konnkt
+    password: pass
+  jpa:
+    properties:
+      hibernate:
+        default_schema: konnktdb
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        show-sql: true
+        ddl-auto: none
+    open-in-view: false
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    validate-on-migrate: false
+    table: konnktdb_schema_version
+    baseline-version: 0
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+vars:
+  security:
+    enable: true
+
+server:
+  port: 8091
+
+token:
+  ttl: 3600000
+  secret: "54ac9bb92d3d412f93905f8762b893f1541ec1a18245876003aea6ca69f231963ac666bf3c7cdca9b86d59b5992ccbe091f4487c0c105d4df7845444be6a237f"
+admin:
+  username: admin
+  email: admin@konnkt.com
+  password: pass
+
+
+
