@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
-    private final String dbUrl = "http://localhost:8093/api/user";
+    private final String dbUrl = "http://database-service:8093/api/user";
     private final RestTemplate restTemplate = new RestTemplate();
     
     @GetMapping("/getUsers")

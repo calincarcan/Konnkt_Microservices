@@ -2,7 +2,7 @@ spring:
   application:
     name: Konnkt-Auth
   datasource:
-    url: jdbc:postgresql://localhost:16666/postgres
+    url: jdbc:postgresql://konnkt_db:5432/postgres
     username: konnkt
     password: pass
   jpa:

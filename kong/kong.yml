@@ -1,0 +1,52 @@
+_format_version: "3.0"
+services:
+  - name: auth-service
+    url: http://auth-service:8091
+    routes:
+      - name: auth-route
+        paths:
+          - /auth
+
+  - name: auth-swagger
+    url: http://auth-service:8091
+    routes:
+      - name: auth-swagger-ui
+        paths:
+          - /auth/swagger-ui/
+          - /auth/swagger-ui.html
+          - /auth/swagger-ui/index.html
+          - /auth/v3/api-docs
+
+  - name: backend-service
+    url: http://backend-service:8092
+    routes:
+      - name: backend-route
+        paths:
+          - /backend
+
+  - name: backend-swagger
+    url: http://backend-service:8092
+    routes:
+      - name: backend-swagger-ui
+        paths:
+          - /backend/swagger-ui/
+          - /backend/swagger-ui.html
+          - /backend/swagger-ui/index.html
+          - /backend/v3/api-docs
+
+  - name: database-service
+    url: http://database-service:8093
+    routes:
+      - name: database-route
+        paths:
+          - /database
+
+  - name: database-swagger
+    url: http://database-service:8093
+    routes:
+      - name: database-swagger-ui
+        paths:
+          - /database/swagger-ui/
+          - /database/swagger-ui.html
+          - /database/swagger-ui/index.html
+          - /database/v3/api-docs

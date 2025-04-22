@@ -19,11 +19,11 @@ services:
     depends_on:
       - konnkt_db
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://konnkt_db:16666/konnkt
+      SPRING_DATASOURCE_URL: jdbc:postgresql://konnkt_db:5432/postgres
       SPRING_DATASOURCE_USERNAME: konnkt
       SPRING_DATASOURCE_PASSWORD: pass
     ports:
-      - "8081:8081"
+      - "8091:8091"
 
   backend-service:
     build:
@@ -33,11 +33,11 @@ services:
       - konnkt_db
       - auth-service
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://konnkt_db:16666/konnkt
+      SPRING_DATASOURCE_URL: jdbc:postgresql://konnkt_db:5432/postgres
       SPRING_DATASOURCE_USERNAME: konnkt
       SPRING_DATASOURCE_PASSWORD: pass
     ports:
-      - "8082:8082"
+      - "8092:8092"
 
   database-service:
     build:
@@ -46,11 +46,29 @@ services:
     depends_on:
       - konnkt_db
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://konnkt_db:16666/konnkt
+      SPRING_DATASOURCE_URL: jdbc:postgresql://konnkt_db:5432/postgres
       SPRING_DATASOURCE_USERNAME: konnkt
       SPRING_DATASOURCE_PASSWORD: pass
     ports:
-      - "8083:8083"
+      - "8093:8093"
+  
+  kong:
+    image: kong:3.6
+    environment:
+      KONG_DATABASE: "off"
+      KONG_DECLARATIVE_CONFIG: /kong/kong.yml
+      KONG_LOG_LEVEL: debug
+    volumes:
+      - ./kong/kong.yml:/kong/kong.yml
+    ports:
+      - "8000:8000"   # Kong Proxy
+      - "8443:8443"   # Kong Proxy SSL
+      - "8001:8001"   # Kong Admin API
+      - "8444:8444"   # Kong Admin API SSL
+    depends_on:
+      - auth-service
+      - backend-service
+      - database-service
 
 volumes:
   konnkt-db-vol:
