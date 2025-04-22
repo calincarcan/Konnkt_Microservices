@@ -22,15 +22,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable())
-            .sessionManagement(session -> session
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/**", "/test/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html")
-.permitAll()
-                .anyRequest().authenticated())
-            .addFilterBefore(new JwtAuthenticationFilter(jwtSecret), 
-                           UsernamePasswordAuthenticationFilter.class);
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+                        .anyRequest().permitAll())
+                .addFilterBefore(new JwtAuthenticationFilter(jwtSecret),
+                        UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
