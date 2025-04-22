@@ -1,6 +1,6 @@
 spring:
   application:
-    name: Konnkt
+    name: Konnkt-Backend
   datasource:
     url: jdbc:postgresql://localhost:16666/postgres
     username: konnkt
@@ -28,16 +28,11 @@ vars:
     enable: true
 
 server:
-  port: 8090
+  port: 8092
 
 token:
   ttl: 3600000
-#  secret: "konnkt_secret"
   secret: "54ac9bb92d3d412f93905f8762b893f1541ec1a18245876003aea6ca69f231963ac666bf3c7cdca9b86d59b5992ccbe091f4487c0c105d4df7845444be6a237f"
-admin:
-  username: admin
-  email: admin@konnkt.com
-  password: pass
 
 
 
