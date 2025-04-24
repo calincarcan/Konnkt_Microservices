@@ -34,7 +34,7 @@ public class UserController {
     }
 
     @GetMapping("/getUser/email/{email}")
-    public ResponseEntity<Optional<UserDto>> getUserByEmail(String email) {
+    public ResponseEntity<Optional<UserDto>> getUserByEmail(@PathVariable String email) {
         Optional<UserDto> user = userService.findByEmail(email);
         if (user == null) {
             return ResponseEntity.notFound().build();
@@ -43,7 +43,7 @@ public class UserController {
     }
 
     @GetMapping("/getUser/id/{id}")
-    public ResponseEntity<Optional<UserDto>> getUserById(Long id) {
+    public ResponseEntity<Optional<UserDto>> getUserById(@PathVariable Long id) {
         Optional<UserDto> user = userService.findById(id);
         if (user == null) {
             return ResponseEntity.notFound().build();
