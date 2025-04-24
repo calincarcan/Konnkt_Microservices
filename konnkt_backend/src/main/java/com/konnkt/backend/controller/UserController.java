@@ -20,28 +20,28 @@ public class UserController {
     public ResponseEntity<?> getUsers() {
         String url = dbUrl + "/getUsers";
         ResponseEntity<?> response = restTemplate.exchange(url, HttpMethod.GET, null, Object.class);
-        return response;
+        return ResponseEntity.status(response.getStatusCode()).body(response.getBody());
     }
 
     @GetMapping("/getUser/id/{id}")
     public ResponseEntity<?> getUserById(@PathVariable Long id) {
         String url = dbUrl + "/getUser/id/" + id;
         ResponseEntity<?> response = restTemplate.getForEntity(url, Object.class);
-        return response;
+        return ResponseEntity.status(response.getStatusCode()).body(response.getBody());
     }
 
     @GetMapping("/getUser/username/{username}")
     public ResponseEntity<?> getUserByUsername(@PathVariable String username) {
         String url = dbUrl + "/getUser/username/" + username;
         ResponseEntity<?> response = restTemplate.getForEntity(url, Object.class);
-        return response;
+        return ResponseEntity.status(response.getStatusCode()).body(response.getBody());
     }
 
     @GetMapping("/getUser/email/{email}")
     public ResponseEntity<?> getUserByEmail(@PathVariable String email) {
         String url = dbUrl + "/getUser/email/" + email;
         ResponseEntity<?> response = restTemplate.getForEntity(url, Object.class);
-        return response;
+        return ResponseEntity.status(response.getStatusCode()).body(response.getBody());
     }
     
     
