@@ -1,12 +1,16 @@
 package com.konnkt.database.service;
 
-import com.konnkt.database.entity.Forum;
-import java.util.List;
+import com.konnkt.database.dto.*;
+import com.konnkt.database.entity.*;
+import java.util.*;
 
 public interface ForumServiceInterface {
-    List<Forum> findAll();
-    Forum findById(Long id);
-    Forum create(Forum forum);
-    Forum update(Long id, Forum forum);
-    void delete(Long id);
+    List<ForumDto> findAll();
+    Optional<ForumDto> findById(Long id);
+    Optional<ForumDto> findByName(String name);
+    Optional<ForumDto> createForum(InputForumDto forumDto);
+    Optional<ForumDto> updateForumName(Long id, String name);
+    Optional<ForumDto> updateForumDescription(Long id, String description);
+    Boolean deleteForumById(Long id);
+    Boolean deleteForumByName(String name);
 }
