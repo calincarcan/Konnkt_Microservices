@@ -1,6 +1,5 @@
 package com.konnkt.database.controller;
 
-import com.konnkt.database.entity.Vote;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
