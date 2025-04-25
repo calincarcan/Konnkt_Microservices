@@ -38,7 +38,6 @@ public class VoteController {
     public ResponseEntity<VoteDto> createVote(@RequestBody InputVoteDto inputVoteDto) {
         String url = dbUrl + "/createVote";
         String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        System.out.println("Username: " + username);
         VoteDtoDB voteDtoDB = new VoteDtoDB(
                 username,
                 inputVoteDto.parentType(),
