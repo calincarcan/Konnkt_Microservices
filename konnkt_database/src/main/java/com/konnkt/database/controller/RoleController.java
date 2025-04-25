@@ -1,6 +1,7 @@
 package com.konnkt.database.controller;
 
 import com.konnkt.database.dto.RoleDto;
+import com.konnkt.database.service.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,15 +14,21 @@ import java.util.*;
 @RequestMapping("/api/role")
 @RequiredArgsConstructor
 public class RoleController {
+     private final RoleService roleService;
 
     @GetMapping("/getRoles")
     public ResponseEntity<List<RoleDto>> getRoles() {
-        return null;
+        List<RoleDto> roles = roleService.findAll();
+        return ResponseEntity.ok(roles);
     }
 
     @GetMapping("/getRole/{id}")
     public ResponseEntity<RoleDto> getRoleById(@PathVariable Long id) {
-        return null;
+        RoleDto role = roleService.findById(id);
+        if (role == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(role);
     }
 
 }
