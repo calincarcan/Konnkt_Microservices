@@ -1,13 +1,13 @@
 package com.konnkt.database.service;
 
-import com.konnkt.database.entity.Post;
-import java.util.List;
+import com.konnkt.database.dto.*;
+import java.util.*;
 
 public interface PostServiceInterface {
-    List<Post> findAll();
-    List<Post> findByForumId(Long forumId);
-    Post findById(Long id);
-    Post create(Post post);
-    Post update(Long id, Post post);
-    void delete(Long id);
+    List<PostDto> findAll();
+    Optional<PostDto> findById(Long id);
+    Optional<PostDto> createPost(InputPostDto inputPostDto);
+    Optional<PostDto> updatePostTitle(Long id, String title);
+    Optional<PostDto> updatePostContent(Long id, String content);
+    Boolean deletePost(Long id);
 }
