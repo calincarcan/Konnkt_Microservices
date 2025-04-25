@@ -13,15 +13,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
+import com.konnkt.backend.dto.UserInputPostDto;
 import com.konnkt.backend.dto.InputPostDto;
-import com.konnkt.backend.dto.InputPostDtoDB;
 import com.konnkt.backend.dto.PostDto;
-
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import org.springframework.core.ParameterizedTypeReference;
 import java.util.List;
 
+@SecurityRequirement(name = "bearerAuth")
 @RestController
 @RequestMapping("/api/post")
 public class PostController {
@@ -43,14 +50,11 @@ public class PostController {
     }
 
     @PostMapping("/createPost")
-    public ResponseEntity<PostDto> createPost(@RequestBody InputPostDto post) {
+    public ResponseEntity<?> createPost(@RequestBody UserInputPostDto post) {
         String url = dbUrl + "/createPost";
         String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-
-        InputPostDtoDB postDB = new InputPostDtoDB(post.title(), post.content(), username, post.forumId());
-
-        HttpEntity<InputPostDtoDB> request = new HttpEntity<>(postDB);
-        ResponseEntity<PostDto> response = restTemplate.postForEntity(url, request, PostDto.class);
+        InputPostDto postDB = new InputPostDto(post.title(), post.content(), username, post.forumId());
+        ResponseEntity<?> response = restTemplate.postForEntity(url, postDB, Object.class);
         return ResponseEntity.status(response.getStatusCode()).body(response.getBody());
     }
     
