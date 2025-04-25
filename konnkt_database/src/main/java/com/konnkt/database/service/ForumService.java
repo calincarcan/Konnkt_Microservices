@@ -99,6 +99,6 @@ public class ForumService implements ForumServiceInterface{
             }
             return true;
         }
-        return false;
+        return true;
     }
 }

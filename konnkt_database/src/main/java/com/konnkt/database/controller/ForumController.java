@@ -59,7 +59,7 @@ public class ForumController {
     }
 
     @PutMapping("/updateForum/desc/{id}")
-    public ResponseEntity<ForumDto> updateForumDescription(@RequestBody Long id, @RequestBody String desc) {
+    public ResponseEntity<ForumDto> updateForumDescription(@PathVariable Long id, @RequestBody String desc) {
         Optional<ForumDto> forum = forumService.updateForumDescription(id, desc);
         if (forum.isEmpty()) {
             return ResponseEntity.badRequest().build();
