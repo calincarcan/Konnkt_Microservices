@@ -88,6 +88,7 @@ services:
     ports:
       - "5050:80"
     volumes:
+      - ./pgadmin/servers:/pgadmin4/servers
       - pgadmin_data:/var/lib/pgadmin
     depends_on:
       - konnkt_db

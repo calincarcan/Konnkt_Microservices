@@ -1,0 +1,14 @@
+{
+    "Servers": {
+        "1": {
+            "Name": "Konnkt Database",
+            "Group": "Servers",
+            "Host": "konnkt_db",
+            "Port": 5432,
+            "MaintenanceDB": "postgres",
+            "Username": "konnkt",
+            "Password": "pass",
+            "SSLMode": "prefer"
+        }
+    }
+}
