@@ -1,13 +1,13 @@
 package com.konnkt.database.service;
 
-import com.konnkt.database.entity.Comment;
-import java.util.List;
+import com.konnkt.database.dto.*;
+import com.konnkt.database.entity.*;
+import java.util.*;
 
 public interface CommentServiceInterface {
-    List<Comment> findAll();
-    List<Comment> findByPostId(Long postId);
-    Comment findById(Long id);
-    Comment create(Comment comment);
-    Comment update(Long id, Comment comment);
-    void delete(Long id);
+    List<CommentDto> findAll();
+    Optional<CommentDto> findById(Long id);
+    Optional<CommentDto> createComment(InputCommentDto commentDto);
+    Optional<CommentDto> updateComment(Long id, String content);
+    Boolean deleteComment(Long id);
 }
