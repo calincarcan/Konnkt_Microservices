@@ -38,7 +38,6 @@ public class CommentController {
     public ResponseEntity<CommentDto> createComment(@RequestBody InputCommentDto inputCommentDto) {
         String url = dbUrl + "/createComment";
         String username = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-        System.out.println("Username: " + username);
         CommentDtoDB commentDtoDB = new CommentDtoDB(
                 inputCommentDto.content(),
                 username,
