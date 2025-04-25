@@ -70,5 +70,29 @@ services:
       - backend-service
       - database-service
 
+  portainer:
+    image: portainer/portainer-ce:2.19.4
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    restart: unless-stopped
+
+  pgadmin:
+    image: dpage/pgadmin4:8.3
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - konnkt_db
+
 volumes:
   konnkt-db-vol:
+  portainer_data:
+  pgadmin_data:
