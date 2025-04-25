@@ -1,12 +1,13 @@
 package com.konnkt.database.service;
 
-import com.konnkt.database.entity.Vote;
-import java.util.List;
+import com.konnkt.database.dto.*;
+import com.konnkt.database.entity.*;
+import java.util.*;
 
 public interface VoteServiceInterface {
-    List<Vote> findAll();
-    Vote findById(Long id);
-    Vote create(Vote vote);
-    Vote update(Long id, Vote vote);
-    void delete(Long id);
+    List<VoteDto> findAll();
+    Optional<VoteDto> findById(Long id);
+    Optional<VoteDto> createVote(InputVoteDto inputVoteDto);
+    Optional<VoteDto> changeVote(Long id);
+    Boolean deleteVote(Long id);
 }
