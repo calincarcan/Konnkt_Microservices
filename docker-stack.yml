@@ -1,0 +1,166 @@
+services:
+  konnkt_db:
+    image: postgres:17.4-alpine
+    ports:
+      - 16666:5432
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: konnkt
+      POSTGRES_PASSWORD: pass
+    volumes:
+      - konnkt-db-vol:/var/lib/postgresql/data
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints: [node.role == manager]
+
+  auth-service:
+    image: calincarcan/konnkt_auth:latest
+    depends_on:
+      - konnkt_db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://konnkt_db:5432/postgres
+      SPRING_DATASOURCE_USERNAME: konnkt
+      SPRING_DATASOURCE_PASSWORD: pass
+    ports:
+      - "8091:8091"
+    deploy:
+      replicas: 1
+
+  backend-service:
+    image: calincarcan/konnkt_backend:latest
+    depends_on:
+      - konnkt_db
+      - auth-service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://konnkt_db:5432/postgres
+      SPRING_DATASOURCE_USERNAME: konnkt
+      SPRING_DATASOURCE_PASSWORD: pass
+    ports:
+      - "8092:8092"
+    deploy:
+      replicas: 1
+
+  database-service:
+    image: calincarcan/konnkt_database:latest
+    depends_on:
+      - konnkt_db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://konnkt_db:5432/postgres
+      SPRING_DATASOURCE_USERNAME: konnkt
+      SPRING_DATASOURCE_PASSWORD: pass
+    ports:
+      - "8093:8093"
+    deploy:
+      replicas: 1
+  
+  kong:
+    image: kong:3.6
+    environment:
+      KONG_DATABASE: "off"
+      KONG_DECLARATIVE_CONFIG: /kong/kong.yml
+      KONG_LOG_LEVEL: debug
+      KONG_PROXY_ACCESS_LOG: /dev/stdout
+      KONG_ADMIN_ACCESS_LOG: /dev/stdout
+      KONG_PROXY_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_LISTEN: 0.0.0.0:8001, 0.0.0.0:8444 ssl
+    volumes:
+      - ./kong/kong.yml:/kong/kong.yml
+    ports:
+      - "8000:8000"
+      - "8443:8443"
+      - "8001:8001"
+      - "8444:8444"
+    depends_on:
+      - auth-service
+      - backend-service
+      - database-service
+    deploy:
+      replicas: 1
+
+  portainer:
+    image: portainer/portainer-ce:2.19.4
+    ports:
+      - "9001:9001"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    restart: unless-stopped
+    deploy:
+      replicas: 1
+
+  pgadmin:
+    image: dpage/pgadmin4:8.3
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    ports:
+      - "5050:80"
+    volumes:
+      - ./pgadmin/servers:/pgadmin4/servers
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - konnkt_db
+    deploy:
+      replicas: 1
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    deploy:
+      replicas: 1
+      
+  node_exporter:
+    image: prom/node-exporter
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    ports:
+      - 9100:9100
+    deploy:
+      mode: global
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    depends_on:
+      - prometheus
+    volumes:
+      - grafana_data:/var/lib/grafana
+    deploy:
+      replicas: 1
+
+  # cadvisor:
+  #   image: gcr.io/cadvisor/cadvisor
+  #   volumes:
+  #     - /:/rootfs:ro
+  #     - /var/run:/var/run:ro
+  #     - /sys:/sys:ro
+  #     - /var/lib/docker/:/var/lib/docker:ro
+  #     - /dev/disk:/dev/disk/:ro
+  #   ports:
+  #     - 8080:8080
+  #   deploy:
+  #     mode: global
+
+volumes:
+  konnkt-db-vol:
+  portainer_data:
+  pgadmin_data:
+  grafana_data:
