@@ -3,7 +3,7 @@
 ## Contributors
 
 - Calin: [github.com/calincarcan]
-- Bogdan: [github.com/Pasca23] 
+- Bogdan: [github.com/Pasca23]
 
 ## [0.6.1] - 2025-04-26 (Calin & Bogdan)
 
