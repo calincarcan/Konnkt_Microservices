@@ -1,0 +1,69 @@
+name: Build and Push Docker Images
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test-build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Test build konnkt_auth
+        uses: docker/build-push-action@v5
+        with:
+          context: ./konnkt_auth
+          push: false
+          load: true
+          tags: konnkt_auth:test
+
+      - name: Test build konnkt_backend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./konnkt_backend
+          push: false
+          load: true
+          tags: konnkt_backend:test
+
+      - name: Test build konnkt_database
+        uses: docker/build-push-action@v5
+        with:
+          context: ./konnkt_database
+          push: false
+          load: true
+          tags: konnkt_database:test
+
+      - name: Log in to Docker Hub
+        if: success()
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push konnkt_auth image
+        if: success()
+        uses: docker/build-push-action@v5
+        with:
+          context: ./konnkt_auth
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/konnkt_auth:latest
+
+      - name: Build and push konnkt_backend image
+        if: success()
+        uses: docker/build-push-action@v5
+        with:
+          context: ./konnkt_backend
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/konnkt_backend:latest
+
+      - name: Build and push konnkt_database image
+        if: success()
+        uses: docker/build-push-action@v5
+        with:
+          context: ./konnkt_database
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/konnkt_database:latest
