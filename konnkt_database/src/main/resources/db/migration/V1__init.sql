@@ -60,3 +60,11 @@ CREATE TABLE Votes (
 -- Insert Initial Roles
 INSERT INTO Roles (role_name) VALUES ('admin');
 INSERT INTO Roles (role_name) VALUES ('user');
+
+-- Insert Initial Admin User
+INSERT INTO Users (username, email, password_hash, role_id) 
+VALUES ('admin', 'admin@konnkt.com', '$2a$10$LBcZu9.FUW3eHUJ7QiXca.mIr9qx9m5DBhnpeeU6ugHc6qe.bJldy', 
+    (SELECT role_id FROM Roles WHERE role_name = 'admin'));
+
+-- Insert Default Forum
+INSERT INTO Forums (name, description) VALUES ('General', 'General');

@@ -17,6 +17,7 @@ services:
       context: ./konnkt_auth
       dockerfile: Dockerfile
     depends_on:
+      - database-service
       - konnkt_db
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://konnkt_db:5432/postgres
@@ -32,6 +33,7 @@ services:
     depends_on:
       - konnkt_db
       - auth-service
+      - database-service
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://konnkt_db:5432/postgres
       SPRING_DATASOURCE_USERNAME: konnkt
