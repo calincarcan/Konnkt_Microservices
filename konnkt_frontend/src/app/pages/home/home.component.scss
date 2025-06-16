@@ -1,0 +1,102 @@
+.home-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    h2 {
+        margin-bottom: 24px;
+        color: #333;
+        text-align: center;
+    }
+
+    .loading, .error, .no-posts {
+        text-align: center;
+        padding: 20px;
+        color: #666;
+    }
+
+    .error {
+        color: #dc3545;
+    }
+
+    .posts-list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .post-card {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        transition: transform 0.2s ease;
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        h3 {
+            margin: 0 0 12px 0;
+            color: #2c3e50;
+            font-size: 1.5em;
+        }
+
+        .post-content {
+            color: #555;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }            .post-meta {
+            display: flex;
+            gap: 16px;
+            color: #666;
+            font-size: 0.9em;
+            flex-wrap: wrap;
+
+            .score {
+                color: #2ecc71;
+                font-weight: bold;
+            }
+            
+            .forum {
+                color: #3498db;
+                font-weight: 500;
+            }
+        }
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 16px;
+        margin-top: 24px;
+
+        button {
+            padding: 8px 16px;
+            border: 1px solid #3498db;
+            background-color: #fff;
+            color: #3498db;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+
+            &:disabled {
+                border-color: #ccc;
+                color: #ccc;
+                cursor: not-allowed;
+            }
+
+            &:not(:disabled):hover {
+                background-color: #3498db;
+                color: #fff;
+            }
+        }
+
+        span {
+            color: #666;
+        }
+    }
+}

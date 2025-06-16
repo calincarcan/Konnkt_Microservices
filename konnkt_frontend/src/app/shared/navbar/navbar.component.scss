@@ -1,0 +1,45 @@
+nav {
+    background-color: #2c3e50;
+    padding: 1rem;
+    width: 98%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+    a, button {
+        color: white;
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        margin: 0 0.5rem;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: #34495e;
+        }
+    }
+
+    button {
+        background: none;
+        border: 1px solid white;
+        cursor: pointer;
+        
+        &:hover {
+            background-color: #e74c3c;
+            border-color: #e74c3c;
+        }
+    }
+
+    .left-section {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .right-section {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+}

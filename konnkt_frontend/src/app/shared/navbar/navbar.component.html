@@ -1,0 +1,19 @@
+<nav *ngIf="loggedIn === true">
+    <a routerLink="/home" routerLinkActive="active">Home</a>
+    <a routerLink="/posts" routerLinkActive="active">Posts</a>
+    <a routerLink="/comments" routerLinkActive="active">Comments</a>
+    <a routerLink="/votes" routerLinkActive="active">Votes</a>
+    <a routerLink="/users" routerLinkActive="active">Users</a>
+    <a routerLink="/about" routerLinkActive="active">About</a>
+    <a *ngIf="isAdmin" routerLink="/forums" routerLinkActive="active">Forums</a>
+    <a *ngIf="isAdmin" routerLink="/profile" routerLinkActive="active">Profile</a>
+    <button (click)="logout()">Sign Out</button>
+</nav>
+
+<nav *ngIf="loggedIn === false">
+    <a routerLink="/home" routerLinkActive="active">Home</a>
+    <a routerLink="/about" routerLinkActive="active">About</a>
+    <button (click)="register()">Register</button>
+    <button (click)="login()">Log In</button>
+</nav>
+

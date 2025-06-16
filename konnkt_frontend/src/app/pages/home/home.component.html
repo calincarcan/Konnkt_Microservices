@@ -1,0 +1,42 @@
+<app-navbar></app-navbar>
+
+<div class="home-container">
+    <h2>Hot Posts</h2>
+
+    <div *ngIf="loading" class="loading">
+        Loading posts...
+    </div>
+
+    <div *ngIf="error" class="error">
+        {{ error }}
+    </div>
+
+    <div class="posts-list" *ngIf="!loading && !error && posts.length > 0">
+        <div class="post-card" *ngFor="let post of paginatedPosts">
+            <h3>{{ post.title }}</h3>
+            <p class="post-content">{{ post.content }}</p>            <div class="post-meta">                <span class="score">Score: {{ post.score }}</span>
+                <span class="post-id">Post ID: {{ post.id }}</span>
+                <span class="author">Author ID: {{ post.authorId }}</span>
+                <span class="forum">Forum: {{ post.forumName }}</span>
+            </div>
+        </div>
+
+        <div class="pagination" *ngIf="posts.length > pageSize">
+            <button 
+                [disabled]="currentPage === 1"
+                (click)="changePage(currentPage - 1)">
+                Previous
+            </button>
+            <span>Page {{ currentPage }} of {{ totalPages }}</span>
+            <button 
+                [disabled]="currentPage === totalPages"
+                (click)="changePage(currentPage + 1)">
+                Next
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="!loading && !error && posts.length === 0" class="no-posts">
+        No posts available.
+    </div>
+</div>

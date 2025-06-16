@@ -1,0 +1,58 @@
+<h2>Users Page</h2>
+
+<app-navbar></app-navbar>
+
+<div class="users-container">
+    <h2>Users List</h2>
+    
+    <div class="search-container" *ngIf="!loading && !error && users.length > 0">
+        <input 
+            type="text" 
+            [(ngModel)]="searchTerm" 
+            placeholder="Search by username or email..."
+            (input)="onSearch()">
+    </div>
+
+    <div *ngIf="loading" class="loading">
+        Loading users...
+    </div>
+
+    <div *ngIf="error" class="error">
+        {{ error }}
+    </div>
+
+    <table *ngIf="!loading && !error && users.length > 0">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of paginatedUsers">
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="pagination" *ngIf="!loading && !error && users.length > 0">
+        <button 
+            [disabled]="currentPage === 1"
+            (click)="changePage(currentPage - 1)">
+            Previous
+        </button>
+        <span>Page {{ currentPage }} of {{ totalPages }}</span>
+        <button 
+            [disabled]="currentPage === totalPages"
+            (click)="changePage(currentPage + 1)">
+            Next
+        </button>
+    </div>
+
+    <div *ngIf="!loading && !error && users.length === 0" class="no-users">
+        No users found.
+    </div>
+</div>

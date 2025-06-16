@@ -1,0 +1,103 @@
+<app-navbar></app-navbar>
+
+<div class="votes-container">
+    <h2>Votes List</h2>
+    
+    <div class="search-container" *ngIf="!loading && !error && votes.length > 0">
+        <input 
+            type="text" 
+            [(ngModel)]="searchTerm" 
+            placeholder="Search by parent type or vote type..."
+            (input)="onSearch()">
+    </div>
+
+    <div *ngIf="loading" class="loading">
+        Loading votes...
+    </div>
+
+    <div *ngIf="error" class="error">
+        {{ error }}
+    </div>
+
+    <table *ngIf="!loading && !error && votes.length > 0">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Author ID</th>
+                <th>Parent Type</th>
+                <th>Parent ID</th>
+                <th>Vote Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let vote of paginatedVotes">
+                <td>{{ vote.id }}</td>
+                <td>{{ vote.authorId }}</td>
+                <td>{{ vote.parentType }}</td>
+                <td>{{ vote.parentId }}</td>
+                <td>{{ vote.voteType }}</td>
+                <td>
+                    <button class="change-btn" (click)="changeVoteType(vote)">
+                        Edit
+                    </button>
+                    <button class="delete-btn" (click)="confirmDelete(vote)">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="pagination" *ngIf="!loading && !error && votes.length > 0">
+        <button 
+            [disabled]="currentPage === 1"
+            (click)="changePage(currentPage - 1)">
+            Previous
+        </button>
+        <span>Page {{ currentPage }} of {{ totalPages }}</span>
+        <button 
+            [disabled]="currentPage === totalPages"
+            (click)="changePage(currentPage + 1)">
+            Next
+        </button>
+    </div>
+
+    <div class="create-form-container">
+        <h3>Create New Vote</h3>
+        <form [formGroup]="createForm" (ngSubmit)="onSubmit()" class="create-form">
+            <div class="form-group">
+                <label for="parentType">Parent Type:</label>
+                <select 
+                    id="parentType"
+                    formControlName="parentType" 
+                >
+                    <option value="post">Post</option>
+                    <option value="comment">Comment</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="parentId">Parent ID:</label>
+                <input 
+                    id="parentId"
+                    type="number" 
+                    formControlName="parentId" 
+                    placeholder="Enter post/comment ID"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="voteType">Vote Type:</label>
+                <select 
+                    id="voteType"
+                    formControlName="voteType" 
+                >
+                    <option value="1">Upvote (+1)</option>
+                    <option value="-1">Downvote (-1)</option>
+                </select>
+            </div>
+
+            <button type="submit" [disabled]="!createForm.valid">Cast Vote</button>
+        </form>
+    </div>
+</div>

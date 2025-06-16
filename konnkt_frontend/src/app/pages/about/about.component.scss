@@ -1,0 +1,50 @@
+// about.component.scss
+
+// Variables
+$primary-color: #4CAF50;
+$secondary-color: #f4f4f4;
+$text-color: #333;
+
+// General styles
+:host {
+    display: block;
+    padding: 2rem;
+    background-color: $secondary-color;
+    color: $text-color;
+    font-family: 'Arial', sans-serif;
+}
+
+// Header styles
+.about-header {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: $primary-color;
+    margin-bottom: 1.5rem;
+}
+
+// Paragraph styles
+.about-text {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+// Button styles
+.about-button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    background-color: $primary-color;
+    border: none;
+    border-radius: 5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: darken($primary-color, 10%);
+    }
+}

@@ -1,0 +1,100 @@
+<app-navbar></app-navbar>
+<div class="comments-container">
+    <h2>Comments List</h2>
+    
+    <div class="search-container" *ngIf="!loading && !error && comments.length > 0">
+        <input 
+            type="text" 
+            [(ngModel)]="searchTerm" 
+            placeholder="Search by content..."
+            (input)="onSearch()">
+    </div>
+
+    <div *ngIf="loading" class="loading">
+        Loading comments...
+    </div>
+
+    <div *ngIf="error" class="error">
+        {{ error }}
+    </div>
+
+    <table *ngIf="!loading && !error && comments.length > 0">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Content</th>
+                <th>Author ID</th>
+                <th>Post ID</th>
+                <th>Score</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let comment of paginatedComments">
+                <td>{{ comment.id }}</td>
+                <td>
+                    <div *ngIf="editingComment?.id !== comment.id">
+                        {{ comment.content }}
+                    </div>
+                    <div *ngIf="editingComment?.id === comment.id" class="edit-form">
+                        <form [formGroup]="editForm" (ngSubmit)="updateComment()">
+                            <textarea formControlName="content" rows="4"></textarea>
+                            <div class="button-group">
+                                <button type="submit" [disabled]="!editForm.valid">Save</button>
+                                <button type="button" (click)="cancelEditing()">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </td>
+                <td>{{ comment.authorId }}</td>
+                <td>{{ comment.postId }}</td>
+                <td>{{ comment.score }}</td>
+                <td>
+                    <button (click)="startEditing(comment)" class="edit-btn">Edit</button>
+                    <button (click)="confirmDelete(comment)" class="delete-btn">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="pagination" *ngIf="!loading && !error && comments.length > 0">
+        <button 
+            [disabled]="currentPage === 1"
+            (click)="changePage(currentPage - 1)">
+            Previous
+        </button>
+        <span>Page {{ currentPage }} of {{ totalPages }}</span>
+        <button 
+            [disabled]="currentPage === totalPages"
+            (click)="changePage(currentPage + 1)">
+            Next
+        </button>
+    </div>
+
+    <div class="create-form-container">
+        <h3>Create New Comment</h3>
+        <form [formGroup]="createForm" (ngSubmit)="onSubmit()" class="create-form">
+            <div class="form-group">
+                <label for="content">Content:</label>
+                <textarea 
+                    id="content"
+                    formControlName="content" 
+                    placeholder="Enter your comment"
+                    rows="4"
+                ></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="postId">Post ID:</label>
+                <input 
+                    id="postId"
+                    type="number" 
+                    formControlName="postId" 
+                    placeholder="Enter post ID"
+                >
+            </div>
+
+            <button type="submit" [disabled]="!createForm.valid">Add Comment</button>
+        </form>
+    </div>
+</div>

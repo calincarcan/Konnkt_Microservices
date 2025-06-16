@@ -1,0 +1,125 @@
+<app-navbar></app-navbar>
+
+<div class="posts-container">
+    <h2>Posts List</h2>
+    
+    <div class="search-container" *ngIf="!loading && !error && posts.length > 0">
+        <input 
+            type="text" 
+            [(ngModel)]="searchTerm" 
+            placeholder="Search by title or content..."
+            (input)="onSearch()">
+    </div>
+
+    <div *ngIf="loading" class="loading">
+        Loading posts...
+    </div>
+
+    <div *ngIf="error" class="error">
+        {{ error }}
+    </div>
+
+    <table *ngIf="!loading && !error && posts.length > 0">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Content</th>
+                <th>Author ID</th>
+                <th>Forum ID</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let post of paginatedPosts">
+                <td>{{ post.id }}</td>
+                <td>
+                    <div *ngIf="editingPostTitle?.id !== post.id">
+                        {{ post.title }}
+                    </div>
+                    <div *ngIf="editingPostTitle?.id === post.id" class="edit-form">
+                        <form [formGroup]="editTitleForm" (ngSubmit)="updatePostTitle()">
+                            <input type="text" formControlName="title">
+                            <div class="button-group">
+                                <button type="submit" [disabled]="!editTitleForm.valid">Save</button>
+                                <button type="button" (click)="cancelEditingTitle()">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="editingPostContent?.id !== post.id">
+                        {{ post.content }}
+                    </div>
+                    <div *ngIf="editingPostContent?.id === post.id" class="edit-form">
+                        <form [formGroup]="editContentForm" (ngSubmit)="updatePostContent()">
+                            <textarea formControlName="content" rows="4"></textarea>
+                            <div class="button-group">
+                                <button type="submit" [disabled]="!editContentForm.valid">Save</button>
+                                <button type="button" (click)="cancelEditingContent()">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </td>
+                <td>{{ post.authorId }}</td>
+                <td>{{ post.forumId }}</td>
+                <td class="actions">
+                    <button (click)="startEditingTitle(post)" class="edit-btn">Edit Title</button>
+                    <button (click)="startEditingContent(post)" class="edit-btn">Edit Content</button>
+                    <button (click)="confirmDelete(post)" class="delete-btn">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="pagination" *ngIf="!loading && !error && posts.length > 0">
+        <button 
+            [disabled]="currentPage === 1"
+            (click)="changePage(currentPage - 1)">
+            Previous
+        </button>
+        <span>Page {{ currentPage }} of {{ totalPages }}</span>
+        <button 
+            [disabled]="currentPage === totalPages"
+            (click)="changePage(currentPage + 1)">
+            Next
+        </button>
+    </div>
+
+    <div class="create-form-container">
+        <h3>Create New Post</h3>
+        <form [formGroup]="createForm" (ngSubmit)="onSubmit()" class="create-form">
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input 
+                    id="title"
+                    type="text" 
+                    formControlName="title" 
+                    placeholder="Enter post title"
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="content">Content:</label>
+                <textarea 
+                    id="content"
+                    formControlName="content" 
+                    placeholder="Enter post content"
+                    rows="4"
+                ></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="forumId">Forum ID:</label>
+                <input 
+                    id="forumId"
+                    type="number" 
+                    formControlName="forumId" 
+                    placeholder="Enter forum ID"
+                >
+            </div>
+
+            <button type="submit" [disabled]="!createForm.valid">Create Post</button>
+        </form>
+    </div>
+</div>
